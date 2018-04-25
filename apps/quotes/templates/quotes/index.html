@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+    <head>{% load static %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="{% static "quotes/bootstrap.min.css" %}">
+        
+        <title>Login/Registration</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+            <a class="navbar-brand" href="#">Quotes App</a>
+        </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="pb-2">Welcome!</h2>
+                </div>    
+                {% if messages %}
+                <div class="col-sm-12">
+                    {% for message in messages %}
+                    <div class="alert {{message.tags}}" role="alert">{{message}}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <div class="col-sm">
+                    <h4 class="pb-2">Register</h4>
+                    <form method="post" action="{%url 'register' %}">
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-3 col-form-label">Name:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="name" name="name">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="username" class="col-sm-3 col-form-label">Username:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="username" name="username">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="password" class="col-sm-3 col-form-label">Password:</label>
+                            <div class="col-sm-9">
+                                <input type="password" class="form-control" id="password" name="password">
+                                <small id="passwordHelp" class="form-text text-muted">* Password should be at least 8 characters</small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="confirm-password" class="col-sm-3 col-form-label">Confirm PW:</label>
+                            <div class="col-sm-9">
+                                <input type="password" class="form-control" id="confirm-password" name="confirm-password">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="date-of-birth" class="col-sm-3 col-form-label">Date of Birth:</label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" id="date-of-birth" name="date-of-birth">
+                            </div>
+                        </div>
+                        <div class="form-group row float-sm-right">
+                            <div class="col-sm-9 col-sm-offset-3">
+                                <input class="btn btn-primary" type="submit" value="Register">
+                            </div>     
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm">
+                    <h4 class="pb-2">Login</h4>
+                    <form method="post" action="{%url 'login' %}">
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <label for="username" class="col-sm-3 col-form-label">Username:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="username" name="username">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="password" class="col-sm-3 col-form-label">Password:</label>
+                            <div class="col-sm-9">
+                                <input type="password" class="form-control" id="password" name="password">
+                            </div>
+                        </div>
+                        <div class="form-group row float-sm-right">
+                            <div class="col-sm-9 col-sm-offset-3">
+                                <input class="btn btn-primary" type="submit" value="Login">
+                            </div>     
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- jQuery and Bootstrap JS -->
+        <script src="{% static "quotes/jquery.min.js" %}"></script>
+        <script src="{% static "quotes/bootstrap.min.js" %}"></script>
+    </body>
+</html>

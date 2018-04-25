@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+    <head>{% load static %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="{% static "quotes/bootstrap.min.css" %}">
+
+        <title>Quotes</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+            <a class="navbar-brand" href="#">Quotes App</a>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{%url 'quotes' %}">Dashboard</a>
+                    </li>
+                </ul>
+                <span class="nav-item">
+                    <a class="nav-link" href="{%url 'logout' %}">Logout</a>
+                </span>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="pb-2">Hello, {{ user.name }}!</h2>
+                </div>
+                {% if messages %}
+                <div class="col-sm-12">
+                    {% for message in messages %}
+                    <div class="alert {{message.tags}}" role="alert">{{message}}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6">
+                                <h4 class="pb-2">Quotable Quotes</h4>
+                            {% if quotes %}
+                                {% for quote in quotes %}
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <blockquote class="blockquote mb-0">
+                                            <p>"{{quote.message}}"</p>
+                                            <footer class="blockquote-footer">{{quote.quoted_by}}</footer>
+                                        </blockquote>  
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="row">
+                                            <div class="col-sm-7 align-self-center">
+                                                    <p class="card-text">Posted by <a href="/users/{{quote.posted_by.id}}">{{quote.posted_by.name}}</a></p>
+                                            </div>
+                                            <div class="col-sm-5 align-self-center">
+                                                    <a href="{%url 'add-quote' quote.id %}" class="btn btn-sm btn-success float-sm-right">Add to My List</a>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <p>There are no contributed quotes available.</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h4 class="pb-2">Your Favorites</h4>  
+                                {% if favorites %}
+                                    {% for favorite in favorites %}
+                                    <div class="card bg-light mb-4">
+                                        <div class="card-body">
+                                            <blockquote class="blockquote mb-0">
+                                                <p>"{{favorite.message}}"</p>
+                                                <footer class="blockquote-footer">{{favorite.quoted_by}}</footer>
+                                            </blockquote>  
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="row">
+                                                <div class="col-sm-7 align-self-center">
+                                                        <p class="card-text">Posted by <a href="/users/{{favorite.posted_by.id}}">{{favorite.posted_by.name}}</a></p>
+                                                </div>
+                                                <div class="col-sm-5 align-self-center">
+                                                        <a href="{%url 'remove-quote' favorite.id %}" class="btn btn-sm btn-danger float-sm-right">Remove From My List</a>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <p>You have no favorited quotes.</p>
+                                {% endif %}  
+                                </div>
+                                <div class="col-sm-12">
+                                    <h4 class="pt-4 pb-2">Contribute a Quote:</h4>
+                                    <form method="post" action="{%url 'contribute-quote' %}">
+                                        {% csrf_token %}
+                                        <div class="form-group row">
+                                            <label for="quoted-by" class="col-sm-3 col-form-label">Quoted By:</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="quoted-by" name="quoted-by">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="message" class="col-sm-3 col-form-label">Message:</label>
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control" id="message" name="message" rows="4"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row float-sm-right">
+                                            <div class="col-sm-9 col-sm-offset-3">
+                                                <input class="btn btn-primary" type="submit" value="Submit">
+                                            </div>     
+                                        </div>
+                                    </form>  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- jQuery and Bootstrap JS -->
+        <script src="{% static "quotes/jquery.min.js" %}"></script>
+        <script src="{% static "quotes/bootstrap.min.js" %}"></script>
+    </body>
+</html>

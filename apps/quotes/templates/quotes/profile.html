@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+    <head>{% load static %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="{% static "quotes/bootstrap.min.css" %}">
+        
+        <title>Quotes</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+            <a class="navbar-brand" href="#">Quotes App</a>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{%url 'quotes' %}">Dashboard</a>
+                    </li>
+                </ul>
+                <span class="nav-item">
+                    <a class="nav-link" href="{%url 'logout' %}">Logout</a>
+                </span>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row">
+                {% if messages %}
+                <div class="col-sm-12">
+                    {% for message in messages %}
+                    <div class="alert {{message.tags}}" role="alert">{{message}}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <div class="col-sm-12">
+                    <h4 class="pb-2">Posts by {{ profile.name }}</h4>
+                    <p class="pb-2">Count: {{quotes.count}}</p>
+                {% if quotes %}
+                    {% for quote in quotes %}
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <blockquote class="blockquote mb-0">
+                                <p>"{{quote.message}}"</p>
+                                <footer class="blockquote-footer">{{quote.quoted_by}}</footer>
+                            </blockquote>  
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>There are no contributed quotes by this user.</p>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- jQuery and Bootstrap JS -->
+        <script src="{% static "quotes/jquery.min.js" %}"></script>
+        <script src="{% static "quotes/bootstrap.min.js" %}"></script>
+    </body>
+</html>
